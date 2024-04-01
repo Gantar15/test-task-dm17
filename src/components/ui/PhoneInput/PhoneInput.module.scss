@@ -1,0 +1,23 @@
+.phone-input {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 8px 11.5px;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    color: var(--color-font-dark);
+    outline: none;
+    transition: .2s ease;
+
+    &::placeholder {
+        color: var(--color-font-placeholder);
+    }
+
+    &:focus-visible {
+        border-color: var(--color-primary);
+    }
+
+    &_invalid {
+        border-color: var(--color-error);
+    }
+}

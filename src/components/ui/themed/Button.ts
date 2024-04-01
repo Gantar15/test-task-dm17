@@ -29,8 +29,27 @@ export const ButtonStyles: ComponentStyleConfig = {
     outline: {
       fontWeight: "600",
       bg: "transparent",
-      border: "1px solid var(--color-primary)",
       color: "var(--color-button-main)",
+    },
+    translate: {
+      fontWeight: "600",
+      bg: "transparent",
+      border: "1px solid var(--color-border)",
+      color: "white",
+      _hover: {
+        bg: "var(--color-button-main)",
+        color: "white",
+        path: {
+          stroke: "white",
+        },
+      },
+      _active: {
+        bg: "var(--color-button-darkest)",
+        color: "white",
+        path: {
+          stroke: "white",
+        },
+      },
     },
   },
   defaultProps: {

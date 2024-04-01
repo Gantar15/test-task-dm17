@@ -1,29 +1,39 @@
 import Select, { GroupBase, Props, StylesConfig } from "react-select";
 
+import styles from "./Select.module.scss";
+
 const modifyStyles = <
   Option,
   IsMulti extends boolean,
   Group extends GroupBase<Option> = GroupBase<Option>
 >(
+  isInvalid: boolean,
   externalStyles?: StylesConfig<Option, IsMulti, Group>
 ): StylesConfig<Option, IsMulti, Group> => ({
-  ...externalStyles,
   control: (base, state) => ({
     ...base,
+    minWidth: "200px",
     ":hover": {
       ...base[":hover"],
-      borderColor: state.isFocused
+      borderColor: isInvalid
+        ? "var(--color-error)"
+        : state.isFocused
         ? "var(--color-primary)"
         : "var(--color-border)",
     },
     borderRadius: "4px",
-    borderColor: state.isFocused
+    borderColor: isInvalid
+      ? "var(--color-error)"
+      : state.isFocused
       ? "var(--color-primary)"
       : "var(--color-border)",
     boxShadow: "none",
     fontSize: "14px",
     fontWeight: "400",
     padding: "1px 0",
+  }),
+  input: (base, state) => ({
+    ...base,
     color: "var(--color-font-dark)",
   }),
   option: (base, state) => ({
@@ -35,17 +45,29 @@ const modifyStyles = <
         : "var(--color-primary-light)",
     },
   }),
+  placeholder: (base) => ({
+    ...base,
+    color: "var(--color-font-placeholder)",
+  }),
+  ...externalStyles,
 });
 
 export function CustomSelect<
   Option,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
->({ components, ...props }: Props<Option, IsMulti, Group>) {
+>({
+  isInvalid = false,
+  components,
+  ...props
+}: Props<Option, IsMulti, Group> & { isInvalid?: boolean }) {
   return (
     <Select
       {...props}
-      styles={{ ...modifyStyles(props.styles) }}
+      styles={{ ...modifyStyles(isInvalid, props.styles) }}
+      classNames={{
+        input: (base) => styles["select__input"],
+      }}
       components={{
         ...components,
         IndicatorSeparator: null,

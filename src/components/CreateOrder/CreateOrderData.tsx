@@ -1,21 +1,32 @@
+import { AddressOption, OrderAddressSelect } from "./OrderAddressSelect";
 import {
   Button,
   FormControl,
-  FormErrorMessage,
-  Grid,
   HStack,
   Input,
+  InputGroup,
+  InputRightAddon,
   Stack,
   Text,
   Textarea,
+  Tooltip,
 } from "@chakra-ui/react";
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormTrigger,
+  UseFormWatch,
+} from "react-hook-form";
 import { useEffect, useState } from "react";
 
 import { Client } from "@/shared/models/client";
-import CopyIcon from "@/assets/icons/copy.svg";
+import CopyIcon from "@/assets/icons/copy.svg?react";
 import { CreateOrderFields } from "@/shared/types/createOrderFields";
 import { CustomSelect } from "@/components/ui/Select";
+import { FieldBlock } from "../ui/FieldBlock";
+import { OrderDatePicker } from "./OrderDatePicker";
+import { PhoneInput } from "../ui/PhoneInput";
 import { SingleValue } from "react-select";
 import clients from "@/data/clients.json";
 
@@ -27,12 +38,16 @@ const preparedClients = clients.map((client) => ({
 interface CreateOrderDataProps {
   register: UseFormRegister<CreateOrderFields>;
   setValue: UseFormSetValue<CreateOrderFields>;
+  watch: UseFormWatch<CreateOrderFields>;
+  trigger: UseFormTrigger<CreateOrderFields>;
   errors: FieldErrors<CreateOrderFields>;
 }
 
 export const CreateOrderData = ({
   register,
   setValue,
+  watch,
+  trigger,
   errors,
 }: CreateOrderDataProps) => {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -41,70 +56,126 @@ export const CreateOrderData = ({
     setSelectedClient(option?.value || null);
   };
 
+  const copyAddressHandler = () => {
+    navigator.clipboard.writeText(watch("address"));
+  };
+
+  const onAddressChangeHandler = (newValue: SingleValue<AddressOption>) => {
+    setValue("address", newValue?.value || "");
+    trigger("address");
+  };
+
+  const onAddressInputChangeHandler = (newValue: string) => {
+    setValue("address", newValue || "");
+    trigger("address");
+  };
+
   useEffect(() => {
     if (!selectedClient) return;
+    setValue("client", selectedClient.name);
     setValue("phoneNumber", selectedClient.phone);
+    setValue("address", selectedClient.address);
+    trigger("client");
+    trigger("phoneNumber");
+    trigger("address");
   }, [selectedClient]);
 
   return (
-    <Stack spacing={"40px"}>
-      <Stack spacing={"16px"}>
-        <Text className="subtitle">Данные заказа</Text>
-        <Grid rowGap={"5px"}>
-          <Text className="label">Постоянный клиент</Text>
-          <CustomSelect
-            placeholder="Выберите клиента"
-            options={preparedClients}
-            onChange={clientChangeHandler}
-            isSearchable
-          />
-        </Grid>
-        <Grid rowGap={"5px"}>
-          <Text className="label">Номер телефона</Text>
-          <FormControl isInvalid={!!errors.phoneNumber}>
-            <Input
-              {...register("phoneNumber")}
-              placeholder="Введите номер телефона"
-            />
-            {errors.phoneNumber ? (
-              <FormErrorMessage>{errors.phoneNumber.message}</FormErrorMessage>
-            ) : null}
-          </FormControl>
-        </Grid>
-        <Grid rowGap={"5px"}>
-          <Text className="label">Комментарий</Text>
-          <FormControl isInvalid={!!errors.comment}>
-            <Textarea
-              {...register("comment")}
-              placeholder="Введите комментарий"
-              fontSize={"14px"}
-              px={"8px"}
-              py={"10px"}
-              _placeholder={{ color: "var(--color-font-placeholder)" }}
-            />
-            {errors.comment ? (
-              <FormErrorMessage>{errors.comment.message}</FormErrorMessage>
-            ) : null}
-          </FormControl>
-        </Grid>
-      </Stack>
-      <Stack spacing={"16px"}>
-        <Text className="subtitle">Доставка</Text>
-        <Grid rowGap={"5px"}>
-          <Text className="label">Адрес</Text>
-          <HStack spacing={"8px"}>
+    <FormControl isInvalid={Object.keys(errors).length > 0}>
+      <Stack spacing={"40px"}>
+        <Stack spacing={"16px"}>
+          <Text className="subtitle">Данные заказа</Text>
+          <FieldBlock title="Постоянный клиент" error={errors.client?.message}>
             <CustomSelect
               placeholder="Выберите клиента"
               options={preparedClients}
               onChange={clientChangeHandler}
               isSearchable
+              isInvalid={!!errors.client}
             />
-            <Button variant={"outline"} px={"9px"} py={"9px"}>
-              <img src={CopyIcon} />
-            </Button>
-          </HStack>
-        </Grid>
+          </FieldBlock>
+
+          <FieldBlock
+            title="Номер телефона"
+            error={errors.phoneNumber?.message}
+          >
+            <PhoneInput
+              name="phoneNumber"
+              setValue={setValue}
+              isInvalid={!!errors.phoneNumber}
+            />
+          </FieldBlock>
+
+          <FieldBlock title="Комментарий" error={errors.comment?.message}>
+            <Textarea
+              {...register("comment")}
+              isInvalid={!!errors.comment}
+              placeholder="Введите комментарий"
+              fontSize={"14px"}
+              px={"8px"}
+              py={"10px"}
+              _placeholder={{ color: "var(--color-font-placeholder)" }}
+              _focusVisible={{
+                borderColor: "var(--color-primary)",
+                boxShadow: "none",
+              }}
+              color={"var(--color-font-dark)"}
+            />
+          </FieldBlock>
+        </Stack>
+
+        <Stack spacing={"16px"}>
+          <Text className="subtitle">Доставка</Text>
+          <FieldBlock title="Адрес" error={errors.address?.message}>
+            <HStack spacing={"8px"} width={"100%"}>
+              <OrderAddressSelect
+                onChange={onAddressChangeHandler}
+                onInputChange={onAddressInputChangeHandler}
+                isInvalid={!!errors.address}
+                value={{ value: watch("address"), label: watch("address") }}
+              />
+
+              <Tooltip label="Скопировать адрес">
+                <Button
+                  variant={"translate"}
+                  px={"9px"}
+                  py={"9px"}
+                  onClick={copyAddressHandler}
+                >
+                  <CopyIcon />
+                </Button>
+              </Tooltip>
+            </HStack>
+          </FieldBlock>
+
+          <FieldBlock title="Стоимость" error={errors.deliveryPrice?.message}>
+            <InputGroup size="sm">
+              <Input
+                {...register("deliveryPrice")}
+                isInvalid={!!errors.deliveryPrice}
+                placeholder="Стоимость"
+                fontSize={"14px"}
+                px={"8px"}
+                py={"10px"}
+                _placeholder={{ color: "var(--color-font-placeholder)" }}
+              />
+              <InputRightAddon
+                children="RUB"
+                px={"16px"}
+                py={"11.5px"}
+                height={"40px"}
+                backgroundColor={"#D8DBF3"}
+                color={"var(--color-font-dark)"}
+                borderRadius={"0px 4px 4px 0px"}
+              />
+            </InputGroup>
+          </FieldBlock>
+
+          <FieldBlock title="Дата" error={errors.date?.message}>
+            <OrderDatePicker register={register} error={errors.date?.message} />
+          </FieldBlock>
+        </Stack>
       </Stack>
-    </Stack>
+    </FormControl>
   );
 };

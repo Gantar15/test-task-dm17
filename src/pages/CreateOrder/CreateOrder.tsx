@@ -3,18 +3,28 @@ import { Button, Divider, HStack, Stack, Text } from "@chakra-ui/react";
 import { CreateOrderData } from "@/components/CreateOrder/CreateOrderData";
 import { CreateOrderSchema } from "../../shared/schemas/createOrderSchema";
 import { MainLayout } from "@/layouts/MainLayout";
+import { routes } from "@/shared/router/routes";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export const CreateOrder = () => {
-  const { register, setValue, handleSubmit, formState } = useForm({
-    resolver: yupResolver(CreateOrderSchema),
-    mode: "onChange",
-  });
+  const navigate = useNavigate();
+  const { register, setValue, watch, handleSubmit, formState, trigger } =
+    useForm({
+      resolver: yupResolver(CreateOrderSchema),
+      mode: "onChange",
+    });
 
   const { errors } = formState;
 
-  const submitHandler = (data: any) => {};
+  const cancelHandler = () => {
+    navigate(routes.home);
+  };
+
+  const submitHandler = (data: any) => {
+    navigate(routes.home);
+  };
 
   return (
     <MainLayout>
@@ -24,6 +34,8 @@ export const CreateOrder = () => {
           <CreateOrderData
             register={register}
             setValue={setValue}
+            watch={watch}
+            trigger={trigger}
             errors={errors}
           />
           <Divider orientation="vertical" />
@@ -35,6 +47,7 @@ export const CreateOrder = () => {
                 fontWeight={"500"}
                 fontSize={"16px"}
                 cursor={"pointer"}
+                onClick={cancelHandler}
               >
                 Отменить
               </Text>

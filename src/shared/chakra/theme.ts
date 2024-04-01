@@ -3,6 +3,7 @@ import "@fontsource/inter/500.css";
 
 import { ButtonStyles } from "@/components/ui/themed/Button";
 import { InputStyles } from "@/components/ui/themed/Input";
+import { TooltipStyles } from "@/components/ui/themed/Tooltip";
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
@@ -13,6 +14,7 @@ const theme = extendTheme({
   components: {
     Button: ButtonStyles,
     Input: InputStyles,
+    Tooltip: TooltipStyles,
   },
 });
 

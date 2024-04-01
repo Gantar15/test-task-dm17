@@ -5,7 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "@/shared/router";
-import theme from "@/shared/utils/chakra/theme";
+import theme from "@/shared/chakra/theme";
 
 function App() {
   return (
