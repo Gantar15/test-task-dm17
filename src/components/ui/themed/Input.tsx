@@ -15,6 +15,9 @@ export const InputStyles: ComponentStyleConfig = {
         padding: "11.5px 8px",
         height: "40px",
         borderRadius: "4px",
+        _placeholder: {
+          color: "var(--color-font-placeholder)",
+        },
       },
     },
   },

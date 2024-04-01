@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { OrderStatus } from "@/types/models/order";
+import { OrderStatus } from "@/shared/models/order";
 
 const colors = {
   Created: ["var(--color-primary)", "var(--color-primary-light)"],

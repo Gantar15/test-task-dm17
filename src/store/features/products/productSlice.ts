@@ -1,5 +1,5 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "@/types/models/product";
+import { Product } from "@/shared/models/product";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ProductState {

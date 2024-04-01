@@ -1,5 +1,5 @@
-import { Order } from "@/types/models/order";
-import { OrderStatus } from "../../../types/models/order";
+import { Order } from "@/shared/models/order";
+import { OrderStatus } from "../../../shared/models/order";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 

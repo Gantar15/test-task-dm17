@@ -9,7 +9,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/redux";
 
 import { OrderStatusBlock } from "./OrderStatusBlock";
 import { updateOrderStatus } from "@/store/features/orders/orderSlice";

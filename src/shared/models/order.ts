@@ -10,6 +10,7 @@ export interface Order {
   deliveryPrice: number;
   totalPrice: number;
   comment?: string;
+  products: number[];
 }
 
 export type OrderStatus = "Created" | "Completed" | "Cancelled";
