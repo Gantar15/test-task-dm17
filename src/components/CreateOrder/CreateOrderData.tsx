@@ -79,7 +79,7 @@ export const CreateOrderData = ({
     trigger("phoneNumber");
     trigger("address");
   }, [selectedClient]);
-
+  console.log(watch("phoneNumber"));
   return (
     <FormControl isInvalid={Object.keys(errors).length > 0}>
       <Stack spacing={"40px"}>
@@ -101,8 +101,10 @@ export const CreateOrderData = ({
           >
             <PhoneInput
               name="phoneNumber"
+              value={watch("phoneNumber")}
               setValue={setValue}
               isInvalid={!!errors.phoneNumber}
+              onChange={() => trigger("phoneNumber")}
             />
           </FieldBlock>
 

@@ -47,7 +47,7 @@ export const OrdersTable = () => {
         </Thead>
         <Tbody>
           {orders.map((order) => (
-            <Tr>
+            <Tr key={order.id}>
               <Td>{order.id}</Td>
               <Td>{order.client}</Td>
               <Td>{order.phoneNumber}</Td>

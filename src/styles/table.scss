@@ -21,8 +21,16 @@ td {
 }
 
 th {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: normal !important;
     text-transform: uppercase;
     color: var(--color-font) !important;
+}
+
+tfoot {
+    th p {
+        font-weight: 500;
+        color: var(--color-font-dark);
+    }
 }

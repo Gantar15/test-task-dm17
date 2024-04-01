@@ -1,5 +1,5 @@
 export interface Order {
-  id: string;
+  id: number;
   client: string;
   phoneNumber: string;
   status: OrderStatus;
@@ -10,7 +10,6 @@ export interface Order {
   deliveryPrice: number;
   totalPrice: number;
   comment?: string;
-  products: number[];
 }
 
 export type OrderStatus = "Created" | "Completed" | "Cancelled";

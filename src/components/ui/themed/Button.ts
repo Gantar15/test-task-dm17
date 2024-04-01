@@ -51,6 +51,12 @@ export const ButtonStyles: ComponentStyleConfig = {
         },
       },
     },
+    border: {
+      fontWeight: "400",
+      bg: "transparent",
+      border: "1px solid var(--color-button-main)",
+      color: "var(--color-button-main)",
+    },
   },
   defaultProps: {
     variant: "solid",

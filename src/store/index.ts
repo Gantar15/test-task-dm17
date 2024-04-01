@@ -1,4 +1,13 @@
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
+} from "redux-persist";
 
 import { configureStore } from "@reduxjs/toolkit";
 import orderReducer from "./features/orders/orderSlice";
@@ -18,6 +27,12 @@ export const store = configureStore({
     orders: persistedOrderReducer,
     products: productReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);

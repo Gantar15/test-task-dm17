@@ -10,7 +10,7 @@ export interface OrderState {
 const initialState: OrderState = {
   orders: [
     {
-      id: "12345",
+      id: 12345,
       client: "John Doe",
       phoneNumber: "123-456-7890",
       status: "Created",
@@ -34,7 +34,7 @@ export const orderSlice = createSlice({
     },
     updateOrderStatus: (
       state,
-      action: PayloadAction<{ id: string; status: OrderStatus }>
+      action: PayloadAction<{ id: number; status: OrderStatus }>
     ) => {
       const order = state.orders.find(
         (order) => order.id === action.payload.id
