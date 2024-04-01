@@ -1,6 +1,6 @@
 # ⚡Test task
 
-Web-app for manage orders. [here](https://test-task-dm17.vercel.app/)
+Web-app for manage orders. You can visit this project [here](https://test-task-dm17.vercel.app/)
 
 # ⚙️ Tech Stack
 
