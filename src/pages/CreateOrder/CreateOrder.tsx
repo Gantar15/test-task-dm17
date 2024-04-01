@@ -92,7 +92,7 @@ export const CreateOrder = () => {
           <Stack flexGrow={1} spacing={"40px"}>
             <CreateOrderProducts
               orderId={orderId}
-              deliveryPrice={+watch("deliveryPrice") || 0}
+              deliveryPrice={Number(watch("deliveryPrice")) || 0}
             />
             <HStack justifyContent={"flex-end"} spacing={"16px"}>
               <Text

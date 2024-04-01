@@ -91,7 +91,10 @@ export const OrderAddressSelect = ({
     setSelectedOption(option);
     setValue(value);
     onChange?.(option, { action: "select-option", option });
-    onInputChange?.(value, {});
+    onInputChange?.(value, {
+      action: "set-value",
+      prevInputValue: "",
+    });
   };
 
   return (

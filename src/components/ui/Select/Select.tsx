@@ -37,7 +37,7 @@ const modifyStyles = <
     fontWeight: "400",
     padding: "1px 0",
   }),
-  input: (base, state) => ({
+  input: (base) => ({
     ...base,
     color: "var(--color-font-dark)",
   }),
@@ -71,7 +71,7 @@ export function CustomSelect<
       {...props}
       styles={{ ...modifyStyles(isInvalid, props.styles) }}
       classNames={{
-        input: (base) => styles["select__input"],
+        input: () => styles["select__input"],
       }}
       components={{
         ...components,

@@ -1,4 +1,4 @@
-import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
+import { FieldValues, Path, PathValue, UseFormSetValue } from "react-hook-form";
 import { useEffect, useState } from "react";
 
 import InputMask from "react-input-mask";
@@ -31,7 +31,7 @@ export const PhoneInput = <T extends FieldValues>({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
     setNumber(value);
-    setValue(name, value);
+    setValue(name, value as PathValue<T, Path<T>>);
     onChange?.(value);
   };
 

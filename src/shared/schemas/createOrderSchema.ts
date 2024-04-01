@@ -12,7 +12,7 @@ export const CreateOrderSchema = yup.object().shape({
     .test(
       "is-date",
       "Неправильный формат даты",
-      (value) => !isNaN(Date.parse(value))
+      (value) => !!value && !isNaN(Date.parse(value))
     )
     .required("Укажите дату"),
   address: yup.string().required("Укажите адрес"),
