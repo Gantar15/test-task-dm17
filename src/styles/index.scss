@@ -1,0 +1,26 @@
+@import "./variables.scss";
+@import "./table.scss";
+
+body {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-font);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-font-dark);
+}
+
+.subtitle {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-font);
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-font);
+}

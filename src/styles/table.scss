@@ -1,0 +1,28 @@
+table {
+    border-collapse: collapse;
+    border-radius: 4px !important;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #F3F4FB;
+}
+
+th,
+td {
+    padding: 11.5px 16px !important;
+}
+
+td {
+    border: 1px solid var(--color-border);
+    font-size: 14px !important;
+    font-weight: 400;
+    color: var(--color-font);
+}
+
+th {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--color-font) !important;
+}
