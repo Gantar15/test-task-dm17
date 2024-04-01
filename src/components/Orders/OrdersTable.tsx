@@ -1,5 +1,6 @@
 import {
   Button,
+  Flex,
   Table,
   TableContainer,
   Tbody,
@@ -18,11 +19,11 @@ export const OrdersTable = () => {
   const { orders } = useAppSelector((state) => state.orders);
   const dispatch = useAppDispatch();
 
-  const cancelOrderHandler = (id: string) => {
+  const cancelOrderHandler = (id: number) => {
     dispatch(updateOrderStatus({ id, status: "Cancelled" }));
   };
 
-  const completeOrderHandler = (id: string) => {
+  const completeOrderHandler = (id: number) => {
     dispatch(updateOrderStatus({ id, status: "Completed" }));
   };
 
@@ -50,7 +51,7 @@ export const OrdersTable = () => {
             <Tr key={order.id}>
               <Td>{order.id}</Td>
               <Td>{order.client}</Td>
-              <Td>{order.phoneNumber}</Td>
+              <Td>+{order.phoneNumber}</Td>
               <Td>
                 <OrderStatusBlock status={order.status} />
               </Td>
@@ -60,24 +61,28 @@ export const OrdersTable = () => {
               <Td>{order.productsPrice}</Td>
               <Td>{order.deliveryPrice}</Td>
               <Td>{order.totalPrice}</Td>
-              <Td>{order.comment || "-"}</Td>
-              <Td display={"flex"} alignItems={"center"} gap={"20px"}>
-                <Text
-                  size={"sm"}
-                  color={"var(--color-button-main)"}
-                  fontWeight={"500"}
-                  fontSize={"16px"}
-                  cursor={"pointer"}
-                  onClick={() => cancelOrderHandler(order.id)}
-                >
-                  Отменить
-                </Text>
-                <Button
-                  size={"sm"}
-                  onClick={() => completeOrderHandler(order.id)}
-                >
-                  Завершить
-                </Button>
+              <Td>
+                <Text whiteSpace={"pre-line"}>{order.comment || "-"}</Text>
+              </Td>
+              <Td>
+                <Flex alignItems={"center"} gap={"20px"}>
+                  <Text
+                    size={"sm"}
+                    color={"var(--color-button-main)"}
+                    fontWeight={"500"}
+                    fontSize={"16px"}
+                    cursor={"pointer"}
+                    onClick={() => cancelOrderHandler(order.id)}
+                  >
+                    Отменить
+                  </Text>
+                  <Button
+                    size={"sm"}
+                    onClick={() => completeOrderHandler(order.id)}
+                  >
+                    Завершить
+                  </Button>
+                </Flex>
               </Td>
             </Tr>
           ))}

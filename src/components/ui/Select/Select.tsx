@@ -10,8 +10,13 @@ const modifyStyles = <
   isInvalid: boolean,
   externalStyles?: StylesConfig<Option, IsMulti, Group>
 ): StylesConfig<Option, IsMulti, Group> => ({
+  container: (base) => ({
+    ...base,
+    width: "100%",
+  }),
   control: (base, state) => ({
     ...base,
+    width: "100%",
     minWidth: "200px",
     ":hover": {
       ...base[":hover"],

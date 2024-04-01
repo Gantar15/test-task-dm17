@@ -29,10 +29,12 @@ export const ProductsTable = ({
   orderId,
   deliveryPrice,
 }: ProductsTableProps) => {
-  const { register, handleSubmit, formState, reset } = useForm({
-    resolver: yupResolver(CreateProductSchema),
-    mode: "onChange",
-  });
+  const { register, handleSubmit, formState, reset, watch, setValue } = useForm(
+    {
+      resolver: yupResolver(CreateProductSchema),
+      mode: "onChange",
+    }
+  );
   const orderProducts = useAppSelector((state) =>
     state.products.products.filter((product) => product.orderId === orderId)
   );
@@ -44,6 +46,11 @@ export const ProductsTable = ({
     (acc, product) => acc + product.price,
     0
   );
+
+  const articleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+    setValue("article", value);
+  };
 
   const submitProductHandler = (data: CreateProductFields) => {
     dispatch(
@@ -57,7 +64,7 @@ export const ProductsTable = ({
         orderId: orderId,
       })
     );
-    reset();
+    reset({});
   };
 
   return (
@@ -83,6 +90,7 @@ export const ProductsTable = ({
               <Td>{product.quantity}</Td>
               <Td>{product.price}</Td>
               <Td>{product.comment}</Td>
+              <Td></Td>
             </Tr>
           ))}
           <Tr>
@@ -91,7 +99,12 @@ export const ProductsTable = ({
               <Input {...register("title")} isInvalid={!!errors.title} />
             </Td>
             <Td>
-              <Input {...register("article")} isInvalid={!!errors.article} />
+              <Input
+                {...register("article")}
+                isInvalid={!!errors.article}
+                value={watch("article")}
+                onChange={articleChangeHandler}
+              />
             </Td>
             <Td>
               <Input {...register("quantity")} isInvalid={!!errors.quantity} />

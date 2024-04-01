@@ -1,6 +1,7 @@
 import { AddressOption, OrderAddressSelect } from "./OrderAddressSelect";
 import {
   Button,
+  Flex,
   FormControl,
   HStack,
   Input,
@@ -79,7 +80,7 @@ export const CreateOrderData = ({
     trigger("phoneNumber");
     trigger("address");
   }, [selectedClient]);
-  console.log(watch("phoneNumber"));
+
   return (
     <FormControl isInvalid={Object.keys(errors).length > 0}>
       <Stack spacing={"40px"}>
@@ -129,14 +130,13 @@ export const CreateOrderData = ({
         <Stack spacing={"16px"}>
           <Text className="subtitle">Доставка</Text>
           <FieldBlock title="Адрес" error={errors.address?.message}>
-            <HStack spacing={"8px"} width={"100%"}>
+            <Flex columnGap={"8px"} width={"100%"}>
               <OrderAddressSelect
                 onChange={onAddressChangeHandler}
                 onInputChange={onAddressInputChangeHandler}
                 isInvalid={!!errors.address}
                 value={{ value: watch("address"), label: watch("address") }}
               />
-
               <Tooltip label="Скопировать адрес">
                 <Button
                   variant={"translate"}
@@ -147,7 +147,7 @@ export const CreateOrderData = ({
                   <CopyIcon />
                 </Button>
               </Tooltip>
-            </HStack>
+            </Flex>
           </FieldBlock>
 
           <FieldBlock title="Стоимость" error={errors.deliveryPrice?.message}>

@@ -16,7 +16,8 @@ function prepareDateValue(date: string) {
 }
 
 function transformDate(date: Date) {
-  return date.toLocaleDateString("ru-RU");
+  const [day, month, year] = date.toLocaleDateString("ru-RU").split(".");
+  return `${month}.${day}.${year}`;
 }
 
 type dateDay = "today" | "tomorrow" | "day-after-tomorrow";
@@ -26,12 +27,10 @@ interface OrderDatePicker {
 }
 export const OrderDatePicker = ({ register, error }: OrderDatePicker) => {
   const [date, setDate] = useState<string | null>(null);
-  console.log(date);
-  console.log(prepareDateValue(date));
   const registerOptions = register("date");
 
   const changeDateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
+    setDate(transformDate(new Date(e.target.value)));
     registerOptions.onChange(e);
   };
 

@@ -8,21 +8,7 @@ export interface OrderState {
 }
 
 const initialState: OrderState = {
-  orders: [
-    {
-      id: 12345,
-      client: "John Doe",
-      phoneNumber: "123-456-7890",
-      status: "Created",
-      date: "2022.01.01",
-      address: "123 Main Street",
-      quantity: 2,
-      productsPrice: 50.0,
-      deliveryPrice: 5.0,
-      totalPrice: 55.0,
-      comment: "Please deliver by tomorrow.",
-    },
-  ],
+  orders: [],
 };
 
 export const orderSlice = createSlice({
