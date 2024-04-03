@@ -1,8 +1,8 @@
 import { Button, HStack, Input, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import { CreateOrderFields } from "@/shared/types/createOrderFields";
 import { UseFormRegister } from "react-hook-form";
-import { useState } from "react";
 
 function prepareDateValue(date: string) {
   const dateObj = new Date(date);
@@ -23,11 +23,20 @@ function transformDate(date: Date) {
 type dateDay = "today" | "tomorrow" | "day-after-tomorrow";
 interface OrderDatePicker {
   register: UseFormRegister<CreateOrderFields>;
+  setValue: (date: string) => void;
   error?: string;
 }
-export const OrderDatePicker = ({ register, error }: OrderDatePicker) => {
+export const OrderDatePicker = ({
+  register,
+  setValue,
+  error,
+}: OrderDatePicker) => {
   const [date, setDate] = useState<string | null>(null);
   const registerOptions = register("date");
+
+  useEffect(() => {
+    if (date) setValue(prepareDateValue(date));
+  }, [date]);
 
   const changeDateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(transformDate(new Date(e.target.value)));

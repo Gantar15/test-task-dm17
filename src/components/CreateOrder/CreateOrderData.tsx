@@ -173,7 +173,14 @@ export const CreateOrderData = ({
           </FieldBlock>
 
           <FieldBlock title="Дата" error={errors.date?.message}>
-            <OrderDatePicker register={register} error={errors.date?.message} />
+            <OrderDatePicker
+              register={register}
+              setValue={(date) => {
+                setValue("date", date);
+                trigger("date");
+              }}
+              error={errors.date?.message}
+            />
           </FieldBlock>
         </Stack>
       </Stack>

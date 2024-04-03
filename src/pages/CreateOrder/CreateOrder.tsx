@@ -35,7 +35,7 @@ export const CreateOrder = () => {
   const dispatch = useAppDispatch();
 
   const { errors } = formState;
-
+  console.log(watch("date"));
   const cancelHandler = () => {
     navigate(routes.home);
   };
